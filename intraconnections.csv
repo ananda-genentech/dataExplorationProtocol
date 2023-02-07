@@ -1,0 +1,190 @@
+To,Relationship,From
+Collinearity,negatively affects,ANOVA
+Heterogeneity,negatively affects,ANOVA
+Euclidean Distance,type of,Association Measure
+Multivariate,use,Association Measure
+Interactions,need,Balanced Data
+Collinearity,negatively affects,CCA
+Multi-Panel Cleveland Dot Plot,type of,Cleveland Dot Plot
+CCA,sensitive to,Clumped Distribution
+Correlation,identifies,Collinearity
+Multi-Panel Cleveland Dot Plot,identifies,Collinearity
+Outliers,can affect,Collinearity
+P values,significant when remove,Collinearity
+PCA,identifies,Collinearity
+Scatterplot,identifies,Collinearity
+Spatial Covariates,can cause,Collinearity
+Temporal Covariates,can cause,Collinearity
+VIF,measures,Collinearity
+Gamma Distribution,best for,Continuous Data
+Linear Regression,uses,Cook statistic
+Bivariate Linear Regression Line,used in,Coplot
+Negative Binomial Distribution,best for,Count Data
+Negative Binomial GLM,best for,Count Data
+Poisson Distribution,best for,Count Data
+Poisson GLM,best for,Count Data
+Mosteller & Tukey Bulging Rule,ignore effects of,Covariates
+Residual Correlation Structure,caused by missing,Covariates
+GLS,accounts for,Dependence
+Hierarchical Structure,accounts for,Dependence
+Mixed Effects Model,accounts for,Dependence
+Random Effects,accounts for,Dependence
+Residual Correlation Structure,accounts for,Dependence
+Independent Variables,explain,Dependent Variables
+Multivariate,don't use,Distribution
+Clumped Distribution,can cause,Double Zeros
+Corrgram,visualizes,Double Zeros
+Zero Abundance,of 2 instances is,Double Zeros
+Exogenous Variables,explain,Endogenous Variables
+Covariates,affect,Estimated Parameters
+Outliers X,can influence,Estimated Parameters
+Covariates,are,Exogenous Variables
+Explanatory Variables,is,Exogenous Variables
+Independent Variables,is,Exogenous Variables
+Predictor Variables,is,Exogenous Variables
+X,is,Exogenous Variables
+Covariates,are,Explanatory Variables
+Hypothesis Testing,compares,Fitted Values
+Residuals,vs,Fitted Values
+Selection Criterion,compares,Fitted Values
+Collinearity,negatively affects,GAM
+Outliers Y,prefers,Gamma Distribution
+Collinearity,negatively affects,GLM
+Negative Binomial GLM,type of,GLM
+Poisson GLM,type of,GLM
+Data Transformation,of Y solves,Heteroscedasticity
+GAM,doesn't assume,Homogeneity
+GLS,doesn't assume,Homogeneity
+Linear Regression,assumes,Homogeneity
+Residuals,verifies,Homogeneity
+Conditional Box Plot,identifies,Homogeneity
+ANOVA,assumes,Homoscedasticity
+Discriminant Analysis,assumes,Homoscedasticity
+Data Exploration,separate from,Hypothesis Testing
+Linear Regression,assumes,Independence X
+ACF,identifies,Independence Y
+Spatial Correlation,negatively affects,Independence Y
+Temporal Correlation,negatively affects,Independence Y
+Variogram,identifies,Independence Y
+Y vs Space,identifies,Independence Y
+Y vs Time,identifies,Independence Y
+Covariates,are,Independent Variables
+Explanatory Variables,is,Independent Variables
+Predictor Variables,is,Independent Variables
+Collinearity,cause,Insignificant Results
+P values,when high,Insignificant Results
+ANOVA,detects,Interactions
+Coplot,identifies,Interactions
+Linear Regression,identifies,Interactions
+Outliers X,disposable in,Large Sample Size
+Heterogeneity,"of ratio >4, degrades",Least Square Estimators
+Linear Regression,uses,Least Square Estimators
+Heterogeneity,negatively affects,Linear Regression
+Normality Y,can be violated,Linear Regression
+CCA,sensitive to,Low Abundance
+Discriminant Analysis,detects,Measurement Errors
+Observer Distraction,causes,Measurement Errors
+Collinearity,negatively affects,Mixed Effects Model
+CCA,is,Multivariate
+PCA,is,Multivariate
+RDA,is,Multivariate
+Negative Binomial GLM,for,Negative Binomial Distribution
+Outliers Y,prefers,Negative Binomial Distribution
+Outliers X,cause overdispersion if outcome non-binary,Negative Binomial GLM
+Outliers Y,cause overdispersion if outcome non-binary,Negative Binomial GLM
+Zero Inflation Y,biases parameters estimates,Negative Binomial GLM
+Jaccard Index,reduces outlier effect,NMDS
+Linear Regression,can fit,Non-linear Relationships
+Normality Y,implies,Normality of Residuals
+Discriminant Analysis,assumes within-group,Normality Y
+Histogram,identifies,Normality Y
+Linear Regression,assumes,Normality Y
+PCA,does not assume,Normality Y
+QQ-plot,identifies,Normality Y
+T tests,assume,Normality Y
+Predictor Variables,explain,Outcome Variables
+Box Plot,identifies,Outliers X
+Chord Distance,down-weights,Outliers X
+Cleveland Dot Plot,identifies,Outliers X
+Cook statistic,sometimes identifies,Outliers X
+Data Transformation,can fix,Outliers X
+Distribution,can determine,Outliers X
+Euclidean Distance,sensitive to,Outliers X
+Multi-Panel Cleveland Dot Plot,identifies,Outliers X
+Poor Experiment Design,causes,Outliers X
+Box Plot,identifies,Outliers Y
+Cleveland Dot Plot,identifies,Outliers Y
+Scatterplot,identifies,Outliers Y
+Auto-correlation,inflates,P values
+Permutation Methods,obtain,P values
+T statistics,result in,P values
+Multi-Panel Scatter Plot,aka,Pair Plot
+Clumped Distribution,cause similarity,PCA
+Double Zeros,contribute to similarity,PCA
+ACF,calculates,Pearson Correlation Coefficient
+Outliers,negatively affects,Pearson Correlation Coefficient
+CCA,gets P values with,Permutation Methods
+Mantel Test,gets P values with,Permutation Methods
+RDA,gets P values with,Permutation Methods
+Outliers Y,prefers,Poisson Distribution
+Poisson GLM,for,Poisson Distribution
+Outliers X,cause overdispersion if outcome non-binary,Poisson GLM
+Outliers Y,cause overdispersion if outcome non-binary,Poisson GLM
+Zero Inflation Y,biases parameters estimates,Poisson GLM
+Covariates,are,Predictor Variables
+Explanatory Variables,is,Predictor Variables
+Euclidean Distance,based on,Pythagoras' Theorem
+Collinearity,if covariate has high,R squared
+Collinearity,negatively affects,RDA
+Collinearity,problem when weak,Relationships of X & Y
+Conditional Box Plot,identifies,Relationships of X & Y
+Data Transformation,linearizes,Relationships of X & Y
+GAM,doesn't assume linearity,Relationships of X & Y
+GLS,doesn't assume linearity,Relationships of X & Y
+Multi-Panel Scatter Plot,identifies,Relationships of X & Y
+Scatterplot,identifies,Relationships of X & Y
+Homogeneity,if similar variation,Residuals
+Explanatory Variables,explain,Response Variables
+Multi-Panel Scatter Plot,type of,Scatterplot
+Data Transformation,sometimes fixes,Skewness
+Outliers X,valued in,Small Sample Size
+Outliers Y,valued in,Small Sample Size
+Two-Dimensional Smoother,accounts for,Spatial Correlation
+ACF,identifies,Temporal Correlation
+Lagged Covariates,accounts for,Temporal Correlation
+Smoothing Function,accounts for,Temporal Correlation
+Variogram,identifies,Temporal Correlation
+Dependence,increases,Type I Error
+False Covariate Effect,is,Type I Error
+Spatial Correlation,cause,Type I Error
+Temporal Correlation,cause,Type I Error
+Collinearity,cause,Type II Error
+GLM,is,Univariate
+X(n) vs Y,important analysis,Univariate
+Data Transformation,stabilizes,Variance
+Explanatory Variables,is,X
+Independent Variables,is,X
+Predictor Variables,is,X
+Covariates,are,Y
+X,explains,Y
+Zero Inflated GLM,best for,Zero Inflation Y
+Box Plot,identifies,Zero Trouble Y
+Cleveland Dot Plot,identifies,Zero Trouble Y
+Corrgram,identifies,Zero Trouble Y
+Double Zeros,is,Zero Trouble Y
+Frequency Plot,identifies,Zero Trouble Y
+Zero Abundance,is,Zero Trouble Y
+Zero Inflation Y,is,Zero Trouble Y
+Endogenous Variables,is,Dependent Variables
+Endogenous Variables,is,Response Variables
+Endogenous Variables,is,Outcome Variables
+Endogenous Variables,is,Y
+Dependent Variables,is,Response Variables
+Dependent Variables,is,Outcome Variables
+Dependent Variables,is,Y
+Response Variables,is,Outcome Variables
+Response Variables,is,Y
+Outcome Variables,is,Y
+Frequency Plot,is,Histogram
+Frequency Plot,identifies,Normality Y
+Histogram,identifies,Zero Trouble Y

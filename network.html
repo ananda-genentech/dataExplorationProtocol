@@ -1,0 +1,258 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 1000px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 1000px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#eb4034", "id": "ACF", "label": "ACF", "shape": "dot"}, {"color": "#eb4034", "id": "ANOVA", "label": "ANOVA", "shape": "dot"}, {"color": "#eb4034", "id": "Association Measure", "label": "Association Measure", "shape": "dot"}, {"color": "#eb4034", "id": "Auto-correlation", "label": "Auto-correlation", "shape": "dot"}, {"color": "#eb4034", "id": "Balanced Data", "label": "Balanced Data", "shape": "dot"}, {"color": "#eb4034", "id": "Bivariate Linear Regression Line", "label": "Bivariate Linear Regression Line", "shape": "dot"}, {"color": "#eb4034", "id": "Box Plot", "label": "Box Plot", "shape": "dot"}, {"color": "#eb4034", "id": "CCA", "label": "CCA", "shape": "dot"}, {"color": "#eb4034", "id": "Chord Distance", "label": "Chord Distance", "shape": "dot"}, {"color": "#eb4034", "id": "Cleveland Dot Plot", "label": "Cleveland Dot Plot", "shape": "dot"}, {"color": "#eb4034", "id": "Clumped Distribution", "label": "Clumped Distribution", "shape": "dot"}, {"color": "#eb4034", "id": "Collinearity", "label": "Collinearity", "shape": "dot"}, {"color": "#eb4034", "id": "Conditional Box Plot", "label": "Conditional Box Plot", "shape": "dot"}, {"color": "#eb4034", "id": "Continuous Data", "label": "Continuous Data", "shape": "dot"}, {"color": "#eb4034", "id": "Cook statistic", "label": "Cook statistic", "shape": "dot"}, {"color": "#eb4034", "id": "Coplot", "label": "Coplot", "shape": "dot"}, {"color": "#eb4034", "id": "Correlation", "label": "Correlation", "shape": "dot"}, {"color": "#eb4034", "id": "Corrgram", "label": "Corrgram", "shape": "dot"}, {"color": "#eb4034", "id": "Count Data", "label": "Count Data", "shape": "dot"}, {"color": "#eb4034", "id": "Covariates", "label": "Covariates", "shape": "dot"}, {"color": "#eb4034", "id": "Data Exploration", "label": "Data Exploration", "shape": "dot"}, {"color": "#eb4034", "id": "Data Transformation", "label": "Data Transformation", "shape": "dot"}, {"color": "#eb4034", "id": "Dependence", "label": "Dependence", "shape": "dot"}, {"color": "#eb4034", "id": "Dependent Variables", "label": "Dependent Variables", "shape": "dot"}, {"color": "#eb4034", "id": "Discriminant Analysis", "label": "Discriminant Analysis", "shape": "dot"}, {"color": "#eb4034", "id": "Distribution", "label": "Distribution", "shape": "dot"}, {"color": "#eb4034", "id": "Double Zeros", "label": "Double Zeros", "shape": "dot"}, {"color": "#eb4034", "id": "Endogenous Variables", "label": "Endogenous Variables", "shape": "dot"}, {"color": "#eb4034", "id": "Estimated Parameters", "label": "Estimated Parameters", "shape": "dot"}, {"color": "#eb4034", "id": "Euclidean Distance", "label": "Euclidean Distance", "shape": "dot"}, {"color": "#eb4034", "id": "Exogenous Variables", "label": "Exogenous Variables", "shape": "dot"}, {"color": "#eb4034", "id": "Explanatory Variables", "label": "Explanatory Variables", "shape": "dot"}, {"color": "#eb4034", "id": "False Covariate Effect", "label": "False Covariate Effect", "shape": "dot"}, {"color": "#eb4034", "id": "Fitted Values", "label": "Fitted Values", "shape": "dot"}, {"color": "#eb4034", "id": "Frequency Plot", "label": "Frequency Plot", "shape": "dot"}, {"color": "#eb4034", "id": "GAM", "label": "GAM", "shape": "dot"}, {"color": "#eb4034", "id": "GLM", "label": "GLM", "shape": "dot"}, {"color": "#eb4034", "id": "GLS", "label": "GLS", "shape": "dot"}, {"color": "#eb4034", "id": "Gamma Distribution", "label": "Gamma Distribution", "shape": "dot"}, {"color": "#eb4034", "id": "Heterogeneity", "label": "Heterogeneity", "shape": "dot"}, {"color": "#eb4034", "id": "Heteroscedasticity", "label": "Heteroscedasticity", "shape": "dot"}, {"color": "#eb4034", "id": "Hierarchical Structure", "label": "Hierarchical Structure", "shape": "dot"}, {"color": "#eb4034", "id": "Histogram", "label": "Histogram", "shape": "dot"}, {"color": "#eb4034", "id": "Homogeneity", "label": "Homogeneity", "shape": "dot"}, {"color": "#eb4034", "id": "Homoscedasticity", "label": "Homoscedasticity", "shape": "dot"}, {"color": "#eb4034", "id": "Hypothesis Testing", "label": "Hypothesis Testing", "shape": "dot"}, {"color": "#eb4034", "id": "Independence X", "label": "Independence X", "shape": "dot"}, {"color": "#eb4034", "id": "Independence Y", "label": "Independence Y", "shape": "dot"}, {"color": "#eb4034", "id": "Independent Variables", "label": "Independent Variables", "shape": "dot"}, {"color": "#eb4034", "id": "Insignificant Results", "label": "Insignificant Results", "shape": "dot"}, {"color": "#eb4034", "id": "Interactions", "label": "Interactions", "shape": "dot"}, {"color": "#eb4034", "id": "Jaccard Index", "label": "Jaccard Index", "shape": "dot"}, {"color": "#eb4034", "id": "Lagged Covariates", "label": "Lagged Covariates", "shape": "dot"}, {"color": "#eb4034", "id": "Large Sample Size", "label": "Large Sample Size", "shape": "dot"}, {"color": "#eb4034", "id": "Least Square Estimators", "label": "Least Square Estimators", "shape": "dot"}, {"color": "#eb4034", "id": "Linear Regression", "label": "Linear Regression", "shape": "dot"}, {"color": "#eb4034", "id": "Low Abundance", "label": "Low Abundance", "shape": "dot"}, {"color": "#eb4034", "id": "Mantel Test", "label": "Mantel Test", "shape": "dot"}, {"color": "#eb4034", "id": "Measurement Errors", "label": "Measurement Errors", "shape": "dot"}, {"color": "#eb4034", "id": "Mixed Effects Model", "label": "Mixed Effects Model", "shape": "dot"}, {"color": "#eb4034", "id": "Mosteller \u0026 Tukey Bulging Rule", "label": "Mosteller \u0026 Tukey Bulging Rule", "shape": "dot"}, {"color": "#eb4034", "id": "Multi-Panel Cleveland Dot Plot", "label": "Multi-Panel Cleveland Dot Plot", "shape": "dot"}, {"color": "#eb4034", "id": "Multi-Panel Scatter Plot", "label": "Multi-Panel Scatter Plot", "shape": "dot"}, {"color": "#eb4034", "id": "Multivariate", "label": "Multivariate", "shape": "dot"}, {"color": "#eb4034", "id": "NMDS", "label": "NMDS", "shape": "dot"}, {"color": "#eb4034", "id": "Negative Binomial Distribution", "label": "Negative Binomial Distribution", "shape": "dot"}, {"color": "#eb4034", "id": "Negative Binomial GLM", "label": "Negative Binomial GLM", "shape": "dot"}, {"color": "#eb4034", "id": "Non-linear Relationships", "label": "Non-linear Relationships", "shape": "dot"}, {"color": "#eb4034", "id": "Normality Y", "label": "Normality Y", "shape": "dot"}, {"color": "#eb4034", "id": "Normality of Residuals", "label": "Normality of Residuals", "shape": "dot"}, {"color": "#eb4034", "id": "Observer Distraction", "label": "Observer Distraction", "shape": "dot"}, {"color": "#eb4034", "id": "Outcome Variables", "label": "Outcome Variables", "shape": "dot"}, {"color": "#eb4034", "id": "Outliers", "label": "Outliers", "shape": "dot"}, {"color": "#eb4034", "id": "Outliers X", "label": "Outliers X", "shape": "dot"}, {"color": "#eb4034", "id": "Outliers Y", "label": "Outliers Y", "shape": "dot"}, {"color": "#eb4034", "id": "P values", "label": "P values", "shape": "dot"}, {"color": "#eb4034", "id": "PCA", "label": "PCA", "shape": "dot"}, {"color": "#eb4034", "id": "Pair Plot", "label": "Pair Plot", "shape": "dot"}, {"color": "#eb4034", "id": "Pearson Correlation Coefficient", "label": "Pearson Correlation Coefficient", "shape": "dot"}, {"color": "#eb4034", "id": "Permutation Methods", "label": "Permutation Methods", "shape": "dot"}, {"color": "#eb4034", "id": "Poisson Distribution", "label": "Poisson Distribution", "shape": "dot"}, {"color": "#eb4034", "id": "Poisson GLM", "label": "Poisson GLM", "shape": "dot"}, {"color": "#eb4034", "id": "Poor Experiment Design", "label": "Poor Experiment Design", "shape": "dot"}, {"color": "#eb4034", "id": "Predictor Variables", "label": "Predictor Variables", "shape": "dot"}, {"color": "#eb4034", "id": "Pythagoras\u0027 Theorem", "label": "Pythagoras\u0027 Theorem", "shape": "dot"}, {"color": "#eb4034", "id": "QQ-plot", "label": "QQ-plot", "shape": "dot"}, {"color": "#eb4034", "id": "R squared", "label": "R squared", "shape": "dot"}, {"color": "#eb4034", "id": "RDA", "label": "RDA", "shape": "dot"}, {"color": "#eb4034", "id": "Random Effects", "label": "Random Effects", "shape": "dot"}, {"color": "#eb4034", "id": "Relationships of X \u0026 Y", "label": "Relationships of X \u0026 Y", "shape": "dot"}, {"color": "#eb4034", "id": "Residual Correlation Structure", "label": "Residual Correlation Structure", "shape": "dot"}, {"color": "#eb4034", "id": "Residuals", "label": "Residuals", "shape": "dot"}, {"color": "#eb4034", "id": "Response Variables", "label": "Response Variables", "shape": "dot"}, {"color": "#eb4034", "id": "Scatterplot", "label": "Scatterplot", "shape": "dot"}, {"color": "#eb4034", "id": "Selection Criterion", "label": "Selection Criterion", "shape": "dot"}, {"color": "#eb4034", "id": "Skewness", "label": "Skewness", "shape": "dot"}, {"color": "#eb4034", "id": "Small Sample Size", "label": "Small Sample Size", "shape": "dot"}, {"color": "#eb4034", "id": "Smoothing Function", "label": "Smoothing Function", "shape": "dot"}, {"color": "#eb4034", "id": "Spatial Correlation", "label": "Spatial Correlation", "shape": "dot"}, {"color": "#eb4034", "id": "Spatial Covariates", "label": "Spatial Covariates", "shape": "dot"}, {"color": "#eb4034", "id": "T statistics", "label": "T statistics", "shape": "dot"}, {"color": "#eb4034", "id": "T tests", "label": "T tests", "shape": "dot"}, {"color": "#eb4034", "id": "Temporal Correlation", "label": "Temporal Correlation", "shape": "dot"}, {"color": "#eb4034", "id": "Temporal Covariates", "label": "Temporal Covariates", "shape": "dot"}, {"color": "#eb4034", "id": "Two-Dimensional Smoother", "label": "Two-Dimensional Smoother", "shape": "dot"}, {"color": "#eb4034", "id": "Type I Error", "label": "Type I Error", "shape": "dot"}, {"color": "#eb4034", "id": "Type II Error", "label": "Type II Error", "shape": "dot"}, {"color": "#eb4034", "id": "Univariate", "label": "Univariate", "shape": "dot"}, {"color": "#eb4034", "id": "VIF", "label": "VIF", "shape": "dot"}, {"color": "#eb4034", "id": "Variance", "label": "Variance", "shape": "dot"}, {"color": "#eb4034", "id": "Variogram", "label": "Variogram", "shape": "dot"}, {"color": "#eb4034", "id": "X", "label": "X", "shape": "dot"}, {"color": "#eb4034", "id": "X(n) vs Y", "label": "X(n) vs Y", "shape": "dot"}, {"color": "#eb4034", "id": "Y", "label": "Y", "shape": "dot"}, {"color": "#eb4034", "id": "Y vs Space", "label": "Y vs Space", "shape": "dot"}, {"color": "#eb4034", "id": "Y vs Time", "label": "Y vs Time", "shape": "dot"}, {"color": "#eb4034", "id": "Zero Abundance", "label": "Zero Abundance", "shape": "dot"}, {"color": "#eb4034", "id": "Zero Inflated GLM", "label": "Zero Inflated GLM", "shape": "dot"}, {"color": "#eb4034", "id": "Zero Inflation Y", "label": "Zero Inflation Y", "shape": "dot"}, {"color": "#eb4034", "id": "Zero Trouble Y", "label": "Zero Trouble Y", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "Collinearity", "label": "negatively affects", "to": "ANOVA"}, {"arrows": "to", "from": "Heterogeneity", "label": "negatively affects", "to": "ANOVA"}, {"arrows": "to", "from": "Euclidean Distance", "label": "type of", "to": "Association Measure"}, {"arrows": "to", "from": "Multivariate", "label": "use", "to": "Association Measure"}, {"arrows": "to", "from": "Interactions", "label": "need", "to": "Balanced Data"}, {"arrows": "to", "from": "Collinearity", "label": "negatively affects", "to": "CCA"}, {"arrows": "to", "from": "Multi-Panel Cleveland Dot Plot", "label": "type of", "to": "Cleveland Dot Plot"}, {"arrows": "to", "from": "CCA", "label": "sensitive to", "to": "Clumped Distribution"}, {"arrows": "to", "from": "Correlation", "label": "identifies", "to": "Collinearity"}, {"arrows": "to", "from": "Multi-Panel Cleveland Dot Plot", "label": "identifies", "to": "Collinearity"}, {"arrows": "to", "from": "Outliers", "label": "can affect", "to": "Collinearity"}, {"arrows": "to", "from": "P values", "label": "significant when remove", "to": "Collinearity"}, {"arrows": "to", "from": "PCA", "label": "identifies", "to": "Collinearity"}, {"arrows": "to", "from": "Scatterplot", "label": "identifies", "to": "Collinearity"}, {"arrows": "to", "from": "Spatial Covariates", "label": "can cause", "to": "Collinearity"}, {"arrows": "to", "from": "Temporal Covariates", "label": "can cause", "to": "Collinearity"}, {"arrows": "to", "from": "VIF", "label": "measures", "to": "Collinearity"}, {"arrows": "to", "from": "Gamma Distribution", "label": "best for", "to": "Continuous Data"}, {"arrows": "to", "from": "Linear Regression", "label": "uses", "to": "Cook statistic"}, {"arrows": "to", "from": "Bivariate Linear Regression Line", "label": "used in", "to": "Coplot"}, {"arrows": "to", "from": "Negative Binomial Distribution", "label": "best for", "to": "Count Data"}, {"arrows": "to", "from": "Negative Binomial GLM", "label": "best for", "to": "Count Data"}, {"arrows": "to", "from": "Poisson Distribution", "label": "best for", "to": "Count Data"}, {"arrows": "to", "from": "Poisson GLM", "label": "best for", "to": "Count Data"}, {"arrows": "to", "from": "Mosteller \u0026 Tukey Bulging Rule", "label": "ignore effects of", "to": "Covariates"}, {"arrows": "to", "from": "Residual Correlation Structure", "label": "caused by missing", "to": "Covariates"}, {"arrows": "to", "from": "GLS", "label": "accounts for", "to": "Dependence"}, {"arrows": "to", "from": "Hierarchical Structure", "label": "accounts for", "to": "Dependence"}, {"arrows": "to", "from": "Mixed Effects Model", "label": "accounts for", "to": "Dependence"}, {"arrows": "to", "from": "Random Effects", "label": "accounts for", "to": "Dependence"}, {"arrows": "to", "from": "Residual Correlation Structure", "label": "accounts for", "to": "Dependence"}, {"arrows": "to", "from": "Independent Variables", "label": "explain", "to": "Dependent Variables"}, {"arrows": "to", "from": "Multivariate", "label": "don\u0027t use", "to": "Distribution"}, {"arrows": "to", "from": "Clumped Distribution", "label": "can cause", "to": "Double Zeros"}, {"arrows": "to", "from": "Corrgram", "label": "visualizes", "to": "Double Zeros"}, {"arrows": "to", "from": "Zero Abundance", "label": "of 2 instances is", "to": "Double Zeros"}, {"arrows": "to", "from": "Exogenous Variables", "label": "explain", "to": "Endogenous Variables"}, {"arrows": "to", "from": "Covariates", "label": "affect", "to": "Estimated Parameters"}, {"arrows": "to", "from": "Outliers X", "label": "can influence", "to": "Estimated Parameters"}, {"arrows": "to", "from": "Covariates", "label": "are", "to": "Exogenous Variables"}, {"arrows": "to", "from": "Explanatory Variables", "label": "is", "to": "Exogenous Variables"}, {"arrows": "to", "from": "Independent Variables", "label": "is", "to": "Exogenous Variables"}, {"arrows": "to", "from": "Predictor Variables", "label": "is", "to": "Exogenous Variables"}, {"arrows": "to", "from": "X", "label": "is", "to": "Exogenous Variables"}, {"arrows": "to", "from": "Covariates", "label": "are", "to": "Explanatory Variables"}, {"arrows": "to", "from": "Hypothesis Testing", "label": "compares", "to": "Fitted Values"}, {"arrows": "to", "from": "Residuals", "label": "vs", "to": "Fitted Values"}, {"arrows": "to", "from": "Selection Criterion", "label": "compares", "to": "Fitted Values"}, {"arrows": "to", "from": "Collinearity", "label": "negatively affects", "to": "GAM"}, {"arrows": "to", "from": "Outliers Y", "label": "prefers", "to": "Gamma Distribution"}, {"arrows": "to", "from": "Collinearity", "label": "negatively affects", "to": "GLM"}, {"arrows": "to", "from": "Negative Binomial GLM", "label": "type of", "to": "GLM"}, {"arrows": "to", "from": "Poisson GLM", "label": "type of", "to": "GLM"}, {"arrows": "to", "from": "Data Transformation", "label": "of Y solves", "to": "Heteroscedasticity"}, {"arrows": "to", "from": "GAM", "label": "doesn\u0027t assume", "to": "Homogeneity"}, {"arrows": "to", "from": "GLS", "label": "doesn\u0027t assume", "to": "Homogeneity"}, {"arrows": "to", "from": "Linear Regression", "label": "assumes", "to": "Homogeneity"}, {"arrows": "to", "from": "Residuals", "label": "verifies", "to": "Homogeneity"}, {"arrows": "to", "from": "Conditional Box Plot", "label": "identifies", "to": "Homogeneity"}, {"arrows": "to", "from": "ANOVA", "label": "assumes", "to": "Homoscedasticity"}, {"arrows": "to", "from": "Discriminant Analysis", "label": "assumes", "to": "Homoscedasticity"}, {"arrows": "to", "from": "Data Exploration", "label": "separate from", "to": "Hypothesis Testing"}, {"arrows": "to", "from": "Linear Regression", "label": "assumes", "to": "Independence X"}, {"arrows": "to", "from": "ACF", "label": "identifies", "to": "Independence Y"}, {"arrows": "to", "from": "Spatial Correlation", "label": "negatively affects", "to": "Independence Y"}, {"arrows": "to", "from": "Temporal Correlation", "label": "negatively affects", "to": "Independence Y"}, {"arrows": "to", "from": "Variogram", "label": "identifies", "to": "Independence Y"}, {"arrows": "to", "from": "Y vs Space", "label": "identifies", "to": "Independence Y"}, {"arrows": "to", "from": "Y vs Time", "label": "identifies", "to": "Independence Y"}, {"arrows": "to", "from": "Covariates", "label": "are", "to": "Independent Variables"}, {"arrows": "to", "from": "Explanatory Variables", "label": "is", "to": "Independent Variables"}, {"arrows": "to", "from": "Predictor Variables", "label": "is", "to": "Independent Variables"}, {"arrows": "to", "from": "Collinearity", "label": "cause", "to": "Insignificant Results"}, {"arrows": "to", "from": "P values", "label": "when high", "to": "Insignificant Results"}, {"arrows": "to", "from": "ANOVA", "label": "detects", "to": "Interactions"}, {"arrows": "to", "from": "Coplot", "label": "identifies", "to": "Interactions"}, {"arrows": "to", "from": "Linear Regression", "label": "identifies", "to": "Interactions"}, {"arrows": "to", "from": "Outliers X", "label": "disposable in", "to": "Large Sample Size"}, {"arrows": "to", "from": "Heterogeneity", "label": "of ratio \u003e4, degrades", "to": "Least Square Estimators"}, {"arrows": "to", "from": "Linear Regression", "label": "uses", "to": "Least Square Estimators"}, {"arrows": "to", "from": "Heterogeneity", "label": "negatively affects", "to": "Linear Regression"}, {"arrows": "to", "from": "Normality Y", "label": "can be violated", "to": "Linear Regression"}, {"arrows": "to", "from": "CCA", "label": "sensitive to", "to": "Low Abundance"}, {"arrows": "to", "from": "Discriminant Analysis", "label": "detects", "to": "Measurement Errors"}, {"arrows": "to", "from": "Observer Distraction", "label": "causes", "to": "Measurement Errors"}, {"arrows": "to", "from": "Collinearity", "label": "negatively affects", "to": "Mixed Effects Model"}, {"arrows": "to", "from": "CCA", "label": "is", "to": "Multivariate"}, {"arrows": "to", "from": "PCA", "label": "is", "to": "Multivariate"}, {"arrows": "to", "from": "RDA", "label": "is", "to": "Multivariate"}, {"arrows": "to", "from": "Negative Binomial GLM", "label": "for", "to": "Negative Binomial Distribution"}, {"arrows": "to", "from": "Outliers Y", "label": "prefers", "to": "Negative Binomial Distribution"}, {"arrows": "to", "from": "Outliers X", "label": "cause overdispersion if outcome non-binary", "to": "Negative Binomial GLM"}, {"arrows": "to", "from": "Outliers Y", "label": "cause overdispersion if outcome non-binary", "to": "Negative Binomial GLM"}, {"arrows": "to", "from": "Zero Inflation Y", "label": "biases parameters estimates", "to": "Negative Binomial GLM"}, {"arrows": "to", "from": "Jaccard Index", "label": "reduces outlier effect", "to": "NMDS"}, {"arrows": "to", "from": "Linear Regression", "label": "can fit", "to": "Non-linear Relationships"}, {"arrows": "to", "from": "Normality Y", "label": "implies", "to": "Normality of Residuals"}, {"arrows": "to", "from": "Discriminant Analysis", "label": "assumes within-group", "to": "Normality Y"}, {"arrows": "to", "from": "Histogram", "label": "identifies", "to": "Normality Y"}, {"arrows": "to", "from": "Linear Regression", "label": "assumes", "to": "Normality Y"}, {"arrows": "to", "from": "PCA", "label": "does not assume", "to": "Normality Y"}, {"arrows": "to", "from": "QQ-plot", "label": "identifies", "to": "Normality Y"}, {"arrows": "to", "from": "T tests", "label": "assume", "to": "Normality Y"}, {"arrows": "to", "from": "Predictor Variables", "label": "explain", "to": "Outcome Variables"}, {"arrows": "to", "from": "Box Plot", "label": "identifies", "to": "Outliers X"}, {"arrows": "to", "from": "Chord Distance", "label": "down-weights", "to": "Outliers X"}, {"arrows": "to", "from": "Cleveland Dot Plot", "label": "identifies", "to": "Outliers X"}, {"arrows": "to", "from": "Cook statistic", "label": "sometimes identifies", "to": "Outliers X"}, {"arrows": "to", "from": "Data Transformation", "label": "can fix", "to": "Outliers X"}, {"arrows": "to", "from": "Distribution", "label": "can determine", "to": "Outliers X"}, {"arrows": "to", "from": "Euclidean Distance", "label": "sensitive to", "to": "Outliers X"}, {"arrows": "to", "from": "Multi-Panel Cleveland Dot Plot", "label": "identifies", "to": "Outliers X"}, {"arrows": "to", "from": "Poor Experiment Design", "label": "causes", "to": "Outliers X"}, {"arrows": "to", "from": "Box Plot", "label": "identifies", "to": "Outliers Y"}, {"arrows": "to", "from": "Cleveland Dot Plot", "label": "identifies", "to": "Outliers Y"}, {"arrows": "to", "from": "Scatterplot", "label": "identifies", "to": "Outliers Y"}, {"arrows": "to", "from": "Auto-correlation", "label": "inflates", "to": "P values"}, {"arrows": "to", "from": "Permutation Methods", "label": "obtain", "to": "P values"}, {"arrows": "to", "from": "T statistics", "label": "result in", "to": "P values"}, {"arrows": "to", "from": "Multi-Panel Scatter Plot", "label": "aka", "to": "Pair Plot"}, {"arrows": "to", "from": "Clumped Distribution", "label": "cause similarity", "to": "PCA"}, {"arrows": "to", "from": "Double Zeros", "label": "contribute to similarity", "to": "PCA"}, {"arrows": "to", "from": "ACF", "label": "calculates", "to": "Pearson Correlation Coefficient"}, {"arrows": "to", "from": "Outliers", "label": "negatively affects", "to": "Pearson Correlation Coefficient"}, {"arrows": "to", "from": "CCA", "label": "gets P values with", "to": "Permutation Methods"}, {"arrows": "to", "from": "Mantel Test", "label": "gets P values with", "to": "Permutation Methods"}, {"arrows": "to", "from": "RDA", "label": "gets P values with", "to": "Permutation Methods"}, {"arrows": "to", "from": "Outliers Y", "label": "prefers", "to": "Poisson Distribution"}, {"arrows": "to", "from": "Poisson GLM", "label": "for", "to": "Poisson Distribution"}, {"arrows": "to", "from": "Outliers X", "label": "cause overdispersion if outcome non-binary", "to": "Poisson GLM"}, {"arrows": "to", "from": "Outliers Y", "label": "cause overdispersion if outcome non-binary", "to": "Poisson GLM"}, {"arrows": "to", "from": "Zero Inflation Y", "label": "biases parameters estimates", "to": "Poisson GLM"}, {"arrows": "to", "from": "Covariates", "label": "are", "to": "Predictor Variables"}, {"arrows": "to", "from": "Explanatory Variables", "label": "is", "to": "Predictor Variables"}, {"arrows": "to", "from": "Euclidean Distance", "label": "based on", "to": "Pythagoras\u0027 Theorem"}, {"arrows": "to", "from": "Collinearity", "label": "if covariate has high", "to": "R squared"}, {"arrows": "to", "from": "Collinearity", "label": "negatively affects", "to": "RDA"}, {"arrows": "to", "from": "Collinearity", "label": "problem when weak", "to": "Relationships of X \u0026 Y"}, {"arrows": "to", "from": "Conditional Box Plot", "label": "identifies", "to": "Relationships of X \u0026 Y"}, {"arrows": "to", "from": "Data Transformation", "label": "linearizes", "to": "Relationships of X \u0026 Y"}, {"arrows": "to", "from": "GAM", "label": "doesn\u0027t assume linearity", "to": "Relationships of X \u0026 Y"}, {"arrows": "to", "from": "GLS", "label": "doesn\u0027t assume linearity", "to": "Relationships of X \u0026 Y"}, {"arrows": "to", "from": "Multi-Panel Scatter Plot", "label": "identifies", "to": "Relationships of X \u0026 Y"}, {"arrows": "to", "from": "Scatterplot", "label": "identifies", "to": "Relationships of X \u0026 Y"}, {"arrows": "to", "from": "Homogeneity", "label": "if similar variation", "to": "Residuals"}, {"arrows": "to", "from": "Explanatory Variables", "label": "explain", "to": "Response Variables"}, {"arrows": "to", "from": "Multi-Panel Scatter Plot", "label": "type of", "to": "Scatterplot"}, {"arrows": "to", "from": "Data Transformation", "label": "sometimes fixes", "to": "Skewness"}, {"arrows": "to", "from": "Outliers X", "label": "valued in", "to": "Small Sample Size"}, {"arrows": "to", "from": "Outliers Y", "label": "valued in", "to": "Small Sample Size"}, {"arrows": "to", "from": "Two-Dimensional Smoother", "label": "accounts for", "to": "Spatial Correlation"}, {"arrows": "to", "from": "ACF", "label": "identifies", "to": "Temporal Correlation"}, {"arrows": "to", "from": "Lagged Covariates", "label": "accounts for", "to": "Temporal Correlation"}, {"arrows": "to", "from": "Smoothing Function", "label": "accounts for", "to": "Temporal Correlation"}, {"arrows": "to", "from": "Variogram", "label": "identifies", "to": "Temporal Correlation"}, {"arrows": "to", "from": "Dependence", "label": "increases", "to": "Type I Error"}, {"arrows": "to", "from": "False Covariate Effect", "label": "is", "to": "Type I Error"}, {"arrows": "to", "from": "Spatial Correlation", "label": "cause", "to": "Type I Error"}, {"arrows": "to", "from": "Temporal Correlation", "label": "cause", "to": "Type I Error"}, {"arrows": "to", "from": "Collinearity", "label": "cause", "to": "Type II Error"}, {"arrows": "to", "from": "GLM", "label": "is", "to": "Univariate"}, {"arrows": "to", "from": "X(n) vs Y", "label": "important analysis", "to": "Univariate"}, {"arrows": "to", "from": "Data Transformation", "label": "stabilizes", "to": "Variance"}, {"arrows": "to", "from": "Explanatory Variables", "label": "is", "to": "X"}, {"arrows": "to", "from": "Independent Variables", "label": "is", "to": "X"}, {"arrows": "to", "from": "Predictor Variables", "label": "is", "to": "X"}, {"arrows": "to", "from": "Covariates", "label": "are", "to": "Y"}, {"arrows": "to", "from": "X", "label": "explains", "to": "Y"}, {"arrows": "to", "from": "Zero Inflated GLM", "label": "best for", "to": "Zero Inflation Y"}, {"arrows": "to", "from": "Box Plot", "label": "identifies", "to": "Zero Trouble Y"}, {"arrows": "to", "from": "Cleveland Dot Plot", "label": "identifies", "to": "Zero Trouble Y"}, {"arrows": "to", "from": "Corrgram", "label": "identifies", "to": "Zero Trouble Y"}, {"arrows": "to", "from": "Double Zeros", "label": "is", "to": "Zero Trouble Y"}, {"arrows": "to", "from": "Frequency Plot", "label": "identifies", "to": "Zero Trouble Y"}, {"arrows": "to", "from": "Zero Abundance", "label": "is", "to": "Zero Trouble Y"}, {"arrows": "to", "from": "Zero Inflation Y", "label": "is", "to": "Zero Trouble Y"}, {"arrows": "to", "from": "Endogenous Variables", "label": "is", "to": "Dependent Variables"}, {"arrows": "to", "from": "Endogenous Variables", "label": "is", "to": "Response Variables"}, {"arrows": "to", "from": "Endogenous Variables", "label": "is", "to": "Outcome Variables"}, {"arrows": "to", "from": "Endogenous Variables", "label": "is", "to": "Y"}, {"arrows": "to", "from": "Dependent Variables", "label": "is", "to": "Response Variables"}, {"arrows": "to", "from": "Dependent Variables", "label": "is", "to": "Outcome Variables"}, {"arrows": "to", "from": "Dependent Variables", "label": "is", "to": "Y"}, {"arrows": "to", "from": "Response Variables", "label": "is", "to": "Outcome Variables"}, {"arrows": "to", "from": "Response Variables", "label": "is", "to": "Y"}, {"arrows": "to", "from": "Outcome Variables", "label": "is", "to": "Y"}, {"arrows": "to", "from": "Frequency Plot", "label": "is", "to": "Histogram"}, {"arrows": "to", "from": "Frequency Plot", "label": "identifies", "to": "Normality Y"}, {"arrows": "to", "from": "Histogram", "label": "identifies", "to": "Zero Trouble Y"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 150,
+            "springConstant": 0.05,
+            "springLength": 100
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
