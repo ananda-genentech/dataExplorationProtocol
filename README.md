@@ -6,6 +6,6 @@ paper that connects to another.I represent these `intraconnections` in one big n
 each topic and its intraconnections.
 
 * `intraconViz.ipynb`: code to render network graph and subgraphs
-* `intraconnections.csv`: file containing the different nodes (concepts) and their relationships to each other (`intraconnections`)
+* `intraconnections.csv`: file containing the different nodes (concepts) and their relationships to each other
 * `graphHTML.zip`: file containing all the sub-graphs for each node
 * `network.html`: file containing thhe entire network for all the nodes
