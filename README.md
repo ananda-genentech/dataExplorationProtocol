@@ -7,5 +7,5 @@ each topic and its intraconnections.
 
 * `intraconViz.ipynb`: code to render network graph and subgraphs
 * `intraconnections.csv`: file containing the different nodes (concepts) and their relationships to each other
-* `graphHTML.zip`: file containing all the sub-graphs for each node
-* `network.html`: file containing thhe entire network for all the nodes
+* `graphHTML.zip`: file containing all the sub-graphs for each node/concept
+* `network.html`: file containing the entire network for all the nodes
